@@ -17,7 +17,6 @@ import com.cadulf.trabalhojsb.repositories.CarrinhoRepository;
 
 @Service
 public class ProdutoService {
-
 	@Autowired
 	private FornecedorRepository fornecedorRepository;
 	
@@ -30,32 +29,31 @@ public class ProdutoService {
 	
 	@Transactional
 	public ProdutoDTO saveProduto(ProdutoDTO dto){
-		
-			Carrinho carrinho = carrinhoRepository.findByUsername(null);
-			if (carrinho == null) {
-				carrinho = new Carrinho();
-				carrinho.setId(dto.getCarrinhoId());
-				carrinhoRepository.saveAndFlush(carrinho);
-			}
-			
-			Fornecedor fornecedor = fornecedorRepository.findById(dto.getFornecedorId()).get();
-			
-			Produto produto = new Produto();
-			produto.setFornecedor(fornecedor);
-			produto.setCarrinho(carrinho);
-			produto.setValue(dto.getProduto());
-			
-			produto = produtoRepository.saveAndFlush(produto);
-			
-			double sum = 0;
-			for(Produto x: carrinho.getProdutos()) {
-				sum += x.getValue();
-			}
-			
-			carrinho.setTotal(sum);
-			carrinhoRepository.save(carrinho);
-			fornecedor = fornecedorRepository.save(fornecedor);
-			
-			return new ProdutoDTO(produto);
+		Carrinho carrinho = carrinhoRepository.findByUsername(null);
+		if (carrinho == null) {
+			carrinho = new Carrinho();
+			carrinho.setId(dto.getCarrinhoId());
+			carrinhoRepository.saveAndFlush(carrinho);
 		}
+		
+		Fornecedor fornecedor = fornecedorRepository.findById(dto.getFornecedorId()).get();
+		
+		Produto produto = new Produto();
+		produto.setFornecedor(fornecedor);
+		produto.setCarrinho(carrinho);
+		produto.setValue(dto.getProduto());
+		
+		produto = produtoRepository.saveAndFlush(produto);
+		
+		double sum = 0;
+		for(Produto x: carrinho.getProdutos()) {
+			sum += x.getValue();
+		}
+		
+		carrinho.setTotal(sum);
+		carrinhoRepository.save(carrinho);
+		fornecedor = fornecedorRepository.save(fornecedor);
+		
+		return new ProdutoDTO(produto);
+	}
 }

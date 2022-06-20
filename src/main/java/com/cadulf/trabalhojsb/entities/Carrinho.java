@@ -19,7 +19,7 @@ public class Carrinho {
 	private String username;
 	private Double total;
 	
-	@OneToMany(mappedBy = "id.fornecedor")
+	@OneToMany(mappedBy = "id.carrinho")
 	private Set<Produto> produtos = new HashSet<>();
 	
 	public Carrinho() {

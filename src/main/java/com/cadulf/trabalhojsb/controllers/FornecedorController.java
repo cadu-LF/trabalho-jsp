@@ -20,15 +20,11 @@ public class FornecedorController {
 	
 	@GetMapping
 	public Page<FornecedorDTO> findAll(Pageable pageable){
-		
 		return fornecedorService.findAll(pageable);
-	
 	}
 	
 	@GetMapping(value = "/{id}")
 	public FornecedorDTO find(@PathVariable Long id){
-		
 		return fornecedorService.findById(id);
-	
 	}
 }
